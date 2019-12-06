@@ -1,9 +1,29 @@
-// require('dotenv').config();
-const express='express'
-// const server=express
-const server = require("./server");
+const express = require('express');
+const helmet = require('helmet');
+// const cors = require('cors');
 
-const port = process.env.PORT || 4000;
-server.listen(port, () =>
-  console.log(`\n** Server running on http://localhost${port} **\n`),
-);
+const projectRouter = require('./data/routers/projectRouter');
+const actionRouter = require('../routers/actionRouter');
+
+const server = express();
+
+server.use(logger);
+server.use(helmet());
+server.use(express.json());
+// server.use(cors());
+
+server.use('/api/projects', projectRouter);
+server.use('/api/actions', actionRouter);
+
+server.get('/', (req, res) => {
+  res.send(`<h2>Hello world from Express and Node.js Sprint Challenge!</h2>`);
+});
+
+// Custom Middleware
+function logger(req, res, next) {
+  console.log(`[${new Date().toISOString()}] ${req.method} to ${req.url}`);
+
+  next();
+}
+
+module.exports = server;

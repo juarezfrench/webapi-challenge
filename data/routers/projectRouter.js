@@ -1,7 +1,7 @@
 const express = require('express');
 
-const Projects = require('./data/helpers/projectModel');
-const Actions = require('./data/helpers/actionModel');
+const Projects = require('../helpers/projectModel');
+// const Actions = require('../helpers/');
 
 const router = express.Router();
 
